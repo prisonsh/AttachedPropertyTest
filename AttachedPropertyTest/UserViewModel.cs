@@ -18,7 +18,7 @@ namespace AttachedPropertyTest
         public ObservableCollection<UserModel> UserList { get => _UserList; }
         public ObservableCollection<UserModel> SelectedItems
         {
-            get => _SelectedItems;
+            get => _SelectedItems ?? (_SelectedItems = new ObservableCollection<UserModel>());
             set => _SelectedItems = value;
         }
 
@@ -36,7 +36,14 @@ namespace AttachedPropertyTest
 
 
         ICommand _lvMouseDownCommand;
+        ICommand _MenuAddClick;
         public ICommand lvMouseDownCommand { get => _lvMouseDownCommand ?? (_lvMouseDownCommand = new RelayCommand<UserModel>(lvMouseDown)); }
+        public ICommand MenuAddClick { get => _MenuAddClick??(_MenuAddClick = new RelayCommand(MenuAdd)); }
+
+        private void MenuAdd()
+        {
+            _UserList.Add(new UserModel() { Name = DateTime.Now.ToString("HHmmssfff"), Age = 31, City = "인천" });
+        }
 
         private void lvMouseDown(UserModel user)
         {
