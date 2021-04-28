@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttachedPropertyTest"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
+        xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -18,8 +18,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="lvView"
+        <ListView x:Name="lvView_AttachedProperty"
                   Grid.Column="0"  
                   ItemsSource="{Binding UserList}" 
                   local:ListViewHelper_Attached.SelectedItems="{Binding SelectedItems}">
@@ -32,12 +33,71 @@
             </ListView.View>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseDown">
-                    <mvvm:EventToCommand Command="{Binding lvMouseDown}"
+                    <mvvm:EventToCommand Command="{Binding lvMouseDownCommand}"
                                          EventArgsConverter="{StaticResource ClickItemToUserModelConverter}"
-                                         EventArgsConverterParameter="{Binding ElementName=lvView}"
+                                         EventArgsConverterParameter="{Binding ElementName=lvView_AttachedProperty}"
                                          PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="추가" Command="{Binding MenuAddClick}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+        <ListView x:Name="lvView_Behavior"
+                  Grid.Column="1"  
+                  ItemsSource="{Binding UserList}">
+            <i:Interaction.Behaviors>
+                <local:ListviewHelper_Behavior SelectedItems="{Binding SelectedItems}"/>
+            </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <mvvm:EventToCommand Command="{Binding lvMouseDownCommand}"
+                                         EventArgsConverter="{StaticResource ClickItemToUserModelConverter}"
+                                         EventArgsConverterParameter="{Binding ElementName=lvView_Behavior}"
+                                         PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Age" Width="100" DisplayMemberBinding="{Binding Age}"/>
+                    <GridViewColumn Header="City" Width="100" DisplayMemberBinding="{Binding City}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="추가" Command="{Binding MenuAddClick}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+        <ListView x:Name="lvView_Behavior2"
+                  Grid.Column="2"  
+                  ItemsSource="{Binding UserList}">
+            <i:Interaction.Behaviors>
+                <local:ListviewHelper_Behavior2 SelectedItems="{Binding SelectedItems}"/>
+            </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <mvvm:EventToCommand Command="{Binding lvMouseDownCommand}"
+                                         EventArgsConverter="{StaticResource ClickItemToUserModelConverter}"
+                                         EventArgsConverterParameter="{Binding ElementName=lvView_Behavior2}"
+                                         PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Age" Width="100" DisplayMemberBinding="{Binding Age}"/>
+                    <GridViewColumn Header="City" Width="100" DisplayMemberBinding="{Binding City}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="추가" Command="{Binding MenuAddClick}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </Window>
